@@ -78,15 +78,13 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="35dp"
-            app:srcCompat="@drawable/red" />
+            android:layout_marginTop="35dp" />
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="35dp"
-            app:srcCompat="@drawable/red" />
+            android:layout_marginTop="35dp" />
     </androidx.gridlayout.widget.GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
