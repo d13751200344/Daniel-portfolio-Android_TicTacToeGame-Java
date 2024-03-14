@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jwassignment2.R;
+import com.example.jwassignment2.ViewModel.PlayerViewModel;
 import com.example.jwassignment2.databinding.ActivityMainBinding;
 
 
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private String playerOne;
     private String playerTwo;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());  // ViewBinding setup
         setContentView(binding.getRoot());  // ViewBinding setup
 
+        binding.yellowPlayer.setText("Yellow: "+playerOne);
+        binding.redPlayer.setText("Red: "+playerTwo);
+        binding.stopGame.setOnClickListener(v -> quitGame(v));
+
         // bind imageView1 to imageView9 to the dropToken method
         for (int i = 0; i < binding.gridLayout.getChildCount(); i++) { //loop through the gridLayout children
             //bind the gridLayout children to the dropToken method
             binding.gridLayout.getChildAt(i).setOnClickListener(view -> dropToken(view));
         }
-
     }
 
     public void dropToken(View view) {
@@ -123,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.quitBtn.setOnClickListener(v -> quitGame(v));
         binding.quitBtn.setVisibility(View.VISIBLE);
+
+        binding.stopGame.setVisibility(View.INVISIBLE);
     }
 
     public void playAgain(View view){
@@ -130,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         binding.winnerTextView.setVisibility(View.INVISIBLE);
         binding.playAgainBtn.setVisibility(View.INVISIBLE);
         binding.quitBtn.setVisibility(View.INVISIBLE);
+        binding.stopGame.setVisibility(View.VISIBLE);
 
         //reset the gameActive to true
         gameActive = true;
