@@ -1,5 +1,6 @@
 package com.example.jwassignment2.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,19 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
     boolean gameIsOver = false; //assume the game is not over (there is still empty position to play
 
+    public String playerOne;
+    public String playerTwo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* The following code generated automatically would create an error when using ViewBinding
-        EdgeToEdge.enable(this);
-        //setContentView(R.layout.activity_main);  // we don't need this line anymore as we are using ViewBinding
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.ConstraintLayout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-         */
+        playerOne = getIntent().getStringExtra("playerOne");
+        playerTwo = getIntent().getStringExtra("playerTwo");
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());  // ViewBinding setup
         setContentView(binding.getRoot());  // ViewBinding setup
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
             //bind the gridLayout children to the dropToken method
             binding.gridLayout.getChildAt(i).setOnClickListener(view -> dropToken(view));
         }
-
-
 
     }
 
@@ -91,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                     // Someone has won!
 
                     String winner = "";
-                    if (activePlayer == 1) {
-                        winner = "Yellow";
-                    } else {
-                        winner = "Red";
+                    if (activePlayer == 1) { //yellow wins
+                        winner = playerOne;
+                    } else { //red wins
+                        winner = playerTwo;
                     }
 //                    Toast.makeText(this, winner + " has won!", Toast.LENGTH_SHORT).show();
                     gameActive = false;
@@ -132,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         //show the play again button & quit button
         binding.playAgainBtn.setOnClickListener(v -> playAgain(v));
         binding.playAgainBtn.setVisibility(View.VISIBLE);
+
+        binding.quitBtn.setOnClickListener(v -> quitGame(v));
         binding.quitBtn.setVisibility(View.VISIBLE);
     }
 
@@ -157,5 +155,11 @@ public class MainActivity extends AppCompatActivity {
             ((ImageView) binding.gridLayout.getChildAt(i)).setImageResource(0); //0 means empty
         }
 
+    }
+
+    public void quitGame(View view){
+        // go back to the PlayerActivity
+        Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+        startActivity(intent);
     }
 }

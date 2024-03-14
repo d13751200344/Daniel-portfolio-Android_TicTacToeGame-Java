@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745"
+        app:layout_constraintVertical_bias="0.903"
         app:rowCount="3">
 
         <ImageView
@@ -110,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintVertical_bias="0.213" />
 
     <Button
         android:id="@+id/playAgainBtn"
@@ -123,7 +123,7 @@
         app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.88" />
 
     <Button
         android:id="@+id/quitBtn"
@@ -136,5 +136,5 @@
         app:layout_constraintHorizontal_bias="0.743"
         app:layout_constraintStart_toStartOf="@+id/gridLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.88" />
 </androidx.constraintlayout.widget.ConstraintLayout>
