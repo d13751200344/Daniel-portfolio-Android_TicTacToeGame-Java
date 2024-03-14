@@ -4,35 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jwassignment2.R;
 import com.example.jwassignment2.databinding.ActivityMainBinding;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;  // ViewBinding setup
-    public int activePlayer = 0; //0 for yellow, 1 for red, 2 for empty(initial state); This represents the current player
-    boolean gameActive = true; //game is active, for checking if the game is still active
+    private int activePlayer = 0; //0 for yellow, 1 for red, 2 for empty(initial state); This represents the current player
+    private boolean gameActive = true; //game is active, for checking if the game is still active
 
     //record the condition of the grid, index 0-8. 2 means unplayed(empty state), 0 means occupied by yellow, 1 means occupied by red
-    public int gridState[] = {2, 2, 2, 2, 2, 2, 2, 2, 2};
+    private int gridState[] = {2, 2, 2, 2, 2, 2, 2, 2, 2};
 
     //winning positions records the winning positions of the game
-    public int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+    private int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
-    boolean gameIsOver = false; //assume the game is not over (there is still empty position to play
+    private boolean gameIsOver = false; //assume the game is not over (there is still empty position to play
 
-    public String playerOne;
-    public String playerTwo;
+    private String playerOne;
+    private String playerTwo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         playerOne = getIntent().getStringExtra("playerOne");
         playerTwo = getIntent().getStringExtra("playerTwo");
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());  // ViewBinding setup
         setContentView(binding.getRoot());  // ViewBinding setup
@@ -55,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void dropToken(View view) {
         ImageView counts = (ImageView) view; //cast the view to an ImageView
-//        Toast.makeText(this, counts.getTag().toString(), Toast.LENGTH_SHORT).show(); //show the tag of the ImageView clicked
 
         //get the tag of the ImageView clicked so we can know which position has been clicked
         int tappedCounter = Integer.parseInt(counts.getTag().toString()); //tag is set to 0-8 in the xml file
@@ -92,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     } else { //red wins
                         winner = playerTwo;
                     }
-//                    Toast.makeText(this, winner + " has won!", Toast.LENGTH_SHORT).show();
+
                     gameActive = false;
 
                     //show the winner
@@ -111,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 if (gameIsOver) {
-//                    Toast.makeText(this, "It's a draw!", Toast.LENGTH_SHORT).show();
                     gameActive = false;
 
                     //show the draw message
