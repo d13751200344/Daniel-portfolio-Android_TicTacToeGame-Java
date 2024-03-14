@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //winning positions records the winning positions of the game
     public int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
+    boolean gameIsOver = false; //assume the game is not over (there is still empty position to play
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());  // ViewBinding setup
 
         // bind imageView1 to imageView9 to the dropToken method
-        int imageViewCount = 9; // 9 ImageViews
-        for (int i = 0; i < imageViewCount; i++) {
-            int imageViewId = getResources().getIdentifier("imageView" + (i + 1), "id", getPackageName());
-            ImageView imageView = findViewById(imageViewId);
-            imageView.setOnClickListener(view ->
-                    dropToken(view) //view refers to the ImageView that was clicked
-            );
+        for (int i = 0; i < binding.gridLayout.getChildCount(); i++) { //loop through the gridLayout children
+            //bind the gridLayout children to the dropToken method
+            binding.gridLayout.getChildAt(i).setOnClickListener(view -> dropToken(view));
         }
 
 
@@ -99,12 +96,66 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         winner = "Red";
                     }
-                    Toast.makeText(this, winner + " has won!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, winner + " has won!", Toast.LENGTH_SHORT).show();
                     gameActive = false;
+
+                    //show the winner
+                    binding.winnerTextView.setText("Congrats "+ winner + "!");
+                    gameIsOverMsgDisplay(view);
+                }
+            }
+            //check if it's a draw
+            // if there is no winner and all the positions have been played
+            if(gameActive) {
+                gameIsOver = true; //assume the game is over
+                for (int counterState : gridState) {
+                    if (counterState == 2) {
+                        gameIsOver = false; //if there is still empty position, the game is not over
+                        break;
+                    }
+                }
+                if (gameIsOver) {
+//                    Toast.makeText(this, "It's a draw!", Toast.LENGTH_SHORT).show();
+                    gameActive = false;
+
+                    //show the draw message
+                    binding.winnerTextView.setText("It's a draw!");
+                    gameIsOverMsgDisplay(view);
                 }
             }
         }
+    }
 
-        
+    public void gameIsOverMsgDisplay(View view){
+        binding.winnerTextView.setVisibility(View.VISIBLE);
+
+        //show the play again button & quit button
+        binding.playAgainBtn.setOnClickListener(v -> playAgain(v));
+        binding.playAgainBtn.setVisibility(View.VISIBLE);
+        binding.quitBtn.setVisibility(View.VISIBLE);
+    }
+
+    public void playAgain(View view){
+        //hide the winnerTextView, playAgainBtn, and quitBtn
+        binding.winnerTextView.setVisibility(View.INVISIBLE);
+        binding.playAgainBtn.setVisibility(View.INVISIBLE);
+        binding.quitBtn.setVisibility(View.INVISIBLE);
+
+        //reset the gameActive to true
+        gameActive = true;
+
+        //reset the activePlayer to 0
+        activePlayer = 0;
+
+        //reset the gridState to 2
+        for (int i = 0; i < gridState.length; i++) {
+            gridState[i] = 2;
+        }
+
+        //reset the token images to empty
+        for (int i = 0; i < binding.gridLayout.getChildCount(); i++) {
+            ((ImageView) binding.gridLayout.getChildAt(i)).setImageResource(0); //0 means empty
+        }
+
     }
 }
