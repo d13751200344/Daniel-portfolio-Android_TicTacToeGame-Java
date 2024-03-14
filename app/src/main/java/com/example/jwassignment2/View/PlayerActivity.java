@@ -29,9 +29,15 @@ public class PlayerActivity extends AppCompatActivity {
 
         viewModel = new PlayerViewModel();
 
-        // Bind EditTexts to player names in ViewModel
-        binding.playerOne.setText(viewModel.getPlayerOneName());
-        binding.playerTwo.setText(viewModel.getPlayerTwoName());
+        // Set observer for LiveData in ViewModel
+        viewModel.getPlayerOneName().observe(this, name -> {
+            binding.playerOne.setText(name);
+        });
+
+        viewModel.getPlayerTwoName().observe(this, name -> {
+            binding.playerTwo.setText(name);
+        });
+
 
         binding.playBtn.setOnClickListener(v -> {
             if (binding.playerOne.getText().toString().isEmpty() || binding.playerTwo.getText().toString().isEmpty()) {
@@ -39,13 +45,16 @@ public class PlayerActivity extends AppCompatActivity {
             }else{
                 // Set player names in ViewModel
                 binding.errorTextView.setVisibility(View.INVISIBLE);
-                viewModel.setPlayerOneName(binding.playerOne.getText().toString());
-                viewModel.setPlayerTwoName(binding.playerTwo.getText().toString());
+
+                String playerOneName = binding.playerOne.getText().toString();
+                String playerTwoName = binding.playerTwo.getText().toString();
+                viewModel.setPlayerOneName(playerOneName);
+                viewModel.setPlayerTwoName(playerTwoName);
 
                 // Navigate to MainActivity with player names
                 Intent intent = new Intent(PlayerActivity.this, MainActivity.class);
-                intent.putExtra("playerOne", viewModel.getPlayerOneName());
-                intent.putExtra("playerTwo", viewModel.getPlayerTwoName());
+                intent.putExtra("playerOne", playerOneName);
+                intent.putExtra("playerTwo", playerTwoName);
                 startActivity(intent);
             }
         });
