@@ -10,10 +10,10 @@ public class PlayerViewModel extends ViewModel {
     public PlayerViewModel() {
     }
 
-    public String getPlayerOneNameName() {
+    public String getPlayerOneName() {
         return playerOneName;
     }
-    public String getPlayerTwoNameName() {
+    public String getPlayerTwoName() {
         return playerTwoName;
     }
 
@@ -24,8 +24,4 @@ public class PlayerViewModel extends ViewModel {
         this.playerTwoName = playerTwoName;
     }
 
-    // Method to validate player names (optional)
-    public boolean arePlayerNamesValid() {
-        return !playerOneName.isEmpty() && !playerTwoName.isEmpty();
-    }
 }
